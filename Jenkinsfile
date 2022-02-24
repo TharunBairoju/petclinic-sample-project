@@ -31,7 +31,6 @@ pipeline {
                 sh "mvn clean install"
             	sh "docker stop \$(docker ps --filter status=running -q)"
             	sh "docker rm \$(docker ps --filter status=exited -q)"
-            	sh "docker rmi \$(docker images)"
             	sh "docker build -t plnc/petclinic ."
             	sh "docker run -d -p 8081:8081 -t plnc/petclinic"
             }
