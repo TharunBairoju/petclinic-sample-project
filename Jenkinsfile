@@ -42,6 +42,7 @@ pipeline {
                 branch 'master'
             }
             steps {
+                sh "mvn clean install"
             	sh "docker stop $(docker ps --filter status=running -q)"
             	sh "docker rm $(docker ps --filter status=exited -q)"
             	sh "docker rmi $(docker images)"
