@@ -238,8 +238,8 @@
 					</failOnUnableToExtractRepoInfo>
 				</configuration>
 			</plugin>
-
 		</plugins>
+		<finalName>petclinic</finalName>
 	</build>
 
 	<licenses>
