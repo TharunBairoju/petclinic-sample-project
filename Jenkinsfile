@@ -17,34 +17,20 @@ pipeline {
             }
         }
         stage("Check Code Health") {
-            when {
-                not {
-                    anyOf {
-                        branch 'master';
-                        branch 'develop'
-                    }
-                }
-           }
            steps {
                sh "mvn clean compile"
             }
         }
         stage("Run Test cases") {
-            when {
-                branch 'develop';
-            }
            steps {
                sh "mvn clean test"
             }
         }
         stage("Build & Deploy Code") {
-            when {
-                branch 'master'
-            }
             steps {
-            	sh "docker stop $(docker ps --filter status=running -q)"
-            	sh "docker rm $(docker ps --filter status=exited -q)"
-            	sh "docker rmi $(docker images)"
+                sh "mvn clean install"
+            	sh "docker stop \$(docker ps --filter status=running -q)"
+            	sh "docker rm \$(docker ps --filter status=exited -q)"
             	sh "docker build -t plnc/petclinic ."
             	sh "docker run -d -p 8081:8081 -t plnc/petclinic"
             }
