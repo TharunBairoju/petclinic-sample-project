@@ -17,30 +17,16 @@ pipeline {
             }
         }
         stage("Check Code Health") {
-            when {
-                not {
-                    anyOf {
-                        branch 'master';
-                        branch 'develop'
-                    }
-                }
-           }
            steps {
                sh "mvn clean compile"
             }
         }
         stage("Run Test cases") {
-            when {
-                branch 'develop';
-            }
            steps {
                sh "mvn clean test"
             }
         }
         stage("Build & Deploy Code") {
-            when {
-                branch 'master'
-            }
             steps {
                 sh "mvn clean install"
             	sh "docker stop \$(docker ps --filter status=running -q)"
